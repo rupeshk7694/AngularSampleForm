@@ -1,0 +1,59 @@
+<form class="sample-form" [formGroup]="sampleForm" (ngSubmit)="onSubmit()">
+  <div class="error-messages" *ngIf="submitted">
+    <div *ngIf="sampleForm.controls.email.errors">
+      <mat-error *ngIf="sampleForm.controls.email.errors.required" class="mat-h3">
+        Email is mandatory.
+      </mat-error>
+      <mat-error *ngIf="sampleForm.controls.email.errors.email" class="mat-h3">
+        Please enter a valid email
+      </mat-error>
+    </div>
+    <div *ngIf="sampleForm.controls.password.errors">
+      <mat-error *ngIf="shouldShowError('password') && sampleForm.controls.password.errors.required" class="mat-h3">
+        Password is mandatory
+      </mat-error>
+      <mat-error *ngIf="sampleForm.controls.password.errors.invalid" class="mat-h3">
+        Password must be 8 character long with at least one character and one special
+        character
+      </mat-error>
+    </div>
+  </div>
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Email</mat-label>
+    <input (blur)="showWarning()" matInput placeholder="Please enter your email" formControlName="email">
+    <div *ngIf="shouldShowError('email') && sampleForm.controls.email.errors">
+      <mat-error *ngIf="sampleForm.controls.email.errors.required">
+        Email is mandatory.
+      </mat-error>
+      <mat-error *ngIf="sampleForm.controls.email.errors.email">
+        Please enter a valid email
+      </mat-error>
+    </div>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Subscription</mat-label>
+    <mat-select placeholder="Select your subscription" formControlName="subscription">
+      <mat-option *ngFor="let subscription of subscriptions" [value]="subscription">
+        {{subscription}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field class="full-width" appearance="outline">
+    <mat-label>Password</mat-label>
+    <input (blur)="showWarning()" matInput type="password" placeholder="Please enter your password"
+           formControlName="password"/>
+    <div *ngIf=" shouldShowError('password') && sampleForm.controls.password.errors">
+      <mat-error *ngIf="sampleForm.controls.password.errors.required">
+        Password is mandatory
+      </mat-error>
+      <mat-error *ngIf="sampleForm.controls.password.errors.pattern">
+        Password must be 8 character long with at least one character,onenumber and one special
+        character
+      </mat-error>
+    </div>
+  </mat-form-field>
+  <div class="button-row">
+    <button mat-raised-button color="primary">Submit</button>
+    <button mat-raised-button color="basic" type="button" (click)="onClear()">Clear</button>
+  </div>
+</form>
